@@ -2,7 +2,7 @@
 
 
 import { TextField, Button} from '@radix-ui/themes';
-import React from "react";
+import { useState} from "react";
 import SimpleMDE from "react-simplemde-editor";
 import { useForm, Controller } from 'react-hook-form'
 import axios from 'axios'
@@ -21,13 +21,25 @@ const NewIssuePage = () => {
 
     const {register, control, handleSubmit} = useForm<IssueForm>()
 
-    return (
+    const [error, setError] = useState('')
+
+    const submitForm = async(data: object) => {
+        try {
+            const response = await axios.post("/api/issues", data);
+            console.log(response, data)
+            router.push('/issues');
+        } catch (error) {
+            alert("An error occurred while submitting the form. Please try again later.");
+        }
+    }
+
+    return ( 
         <form 
             className='max-w-xl space-y-3' 
-            onSubmit={handleSubmit(async (data) => {
-            await axios.post("/api/issues", data)
-            router.push('/issues')
-        })}>
+            onSubmit={handleSubmit((data) => {
+                submitForm(data)
+            }
+        )}>
             <TextField.Root placeholder='Title' {...register('title')}>
                 <TextField.Slot />
             </TextField.Root>
