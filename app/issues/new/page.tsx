@@ -29,7 +29,8 @@ const NewIssuePage = () => {
             console.log(response, data)
             router.push('/issues');
         } catch (error) {
-            alert("An error occurred while submitting the form. Please try again later.");
+            setError("An unexpected error has occured")
+            alert("An error occurred while submitting the form. Common:     1.) No Title or Description 2.) No SQL server connection.");
         }
     }
 
