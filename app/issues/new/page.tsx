@@ -27,30 +27,28 @@ const NewIssuePage = () => {
 
     const [error, setError] = useState('')
 
-    const submitForm = async(data: object) => {
+    const submitForm = handleSubmit(async (data) => {
         try {
             setSubmitting(true)
-            const response = await axios.post("/api/issues", data);
-            console.log(response, data)
+            await axios.post("/api/issues", data);
             router.push('/issues');
         } catch (error) {
             setError("Make sure to fill in all of the fields")
             setSubmitting(false)
             //alert("An error occurred while submitting the form. Common:     1.) No Title or Description 2.) No SQL server connection.");
         }
-    }
+    })
 
     const [submitting, setSubmitting] = useState(false)
+
 
     return ( 
         <div className='max-w-xl '>
             
             <form 
                 className='space-y-3' 
-                onSubmit={handleSubmit((data) => {
-                    submitForm(data)
-                }
-            )}>
+                onSubmit={submitForm}
+            >
                 <TextField.Root placeholder='Title' {...register('title')}>
                     <TextField.Slot />
                 </TextField.Root>
