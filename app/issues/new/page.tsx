@@ -44,7 +44,6 @@ const NewIssuePage = () => {
 
     return ( 
         <div className='max-w-xl '>
-            
             <form 
                 className='space-y-3' 
                 onSubmit={submitForm}
